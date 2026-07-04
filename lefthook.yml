@@ -1,0 +1,24 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: '*.{ex,exs}'
+      run: mix format {staged_files}
+      stage_fixed: true
+    gitleaks:
+      run: |
+        if command -v gitleaks >/dev/null 2>&1; then
+          gitleaks protect --staged --verbose
+        else
+          echo "WARNING: gitleaks not installed (brew install gitleaks) — secret scan SKIPPED locally. CI still runs it." >&2
+        fi
+
+commit-msg:
+  commands:
+    conventional:
+      run: mix git_ops.check_message {1}
+
+pre-push:
+  commands:
+    verify:
+      run: mix precommit

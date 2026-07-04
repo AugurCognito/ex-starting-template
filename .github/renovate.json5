@@ -1,0 +1,14 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: ['config:best-practices'],
+  // No Hex-side cooldown exists yet (hexpm/hex#1160 merged, unreleased) —
+  // Renovate's release age gate is the only supply-chain delay for now.
+  minimumReleaseAge: '3 days',
+  lockFileMaintenance: { enabled: true, schedule: ['before 6am on monday'] },
+  packageRules: [
+    {
+      matchManagers: ['github-actions'],
+      pinDigests: true,
+    },
+  ],
+}
