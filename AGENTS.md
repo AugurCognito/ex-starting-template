@@ -38,7 +38,12 @@ A task is **not complete** until `mix precommit` passes. No exceptions. The Stop
 
 - `lib/app.ex` — public surface; `lib/app/` — internals (rename per project). `test/` **mirrors the lib/ tree**: `lib/app/foo/bar.ex` → `test/app/foo/bar_test.exs`. 80% coverage floor.
 - Slop layer: **ex_slop** as a Credo plugin (`.credo.exs`) — ~30 checks against LLM-slop patterns (blanket rescues, redundant Enum chains, narrator comments), plus ex_dna for AST-level duplication.
+- `docs/` — `decisions.md` (append-only decision log) · `guides/` (how-tos) · `plans/` + `plans/archive/` (dated plans, kept after execution) · `reports/` (dated research) · `HANDOFF.md` (session memory).
 - Gates: lefthook (`lefthook.yml`) locally, `.github/workflows/ci.yml` in CI. Local hooks are bypassable; CI is not.
+
+## Finding Things
+
+Grep/Glob plus the `Explore` agent (pinned to haiku) — that's the whole search stack. No semantic index, no committed code map; deliberate, see `docs/decisions.md`.
 
 ## What Does NOT Exist (yet)
 
@@ -46,6 +51,8 @@ No Phoenix, no Ecto/database, no OTP application processes (pure library skeleto
 
 ## Session Workflow
 
-- Long task? Write a plan first (`/plan` command → `docs/plans/`).
-- Ending a session mid-task? Update `docs/HANDOFF.md` (`/handoff` command).
-- Found something non-obvious? Record it (`/report` command) or update this file — with the WHY, not just the WHAT.
+- Long task? Write a plan first (`/plan` skill → `docs/plans/`).
+- Ending a session mid-task? Update `docs/HANDOFF.md` (`/handoff` skill — also archives completed plans).
+- Found something non-obvious? Record it (`/report` skill) or update this file — with the WHY, not just the WHAT.
+- Made a call the code can't express (tool choice, rejected approach, policy)? Append it to `docs/decisions.md`.
+- Blocked install or writing a new slop check? `docs/guides/` first.

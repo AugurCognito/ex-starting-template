@@ -1,6 +1,12 @@
+---
+updated: 2026-07-04
+git_commit: 112fbf0
+branch: main
+---
+
 # HANDOFF
 
-_No task in flight (2026-07-04). This file is overwritten by `/handoff` when a session ends mid-task._
+_No task in flight (2026-07-04). This file is overwritten by `/handoff` when a session ends mid-task. Reference code as `file:line`, never pasted blocks._
 
 ## Known landmines
 
