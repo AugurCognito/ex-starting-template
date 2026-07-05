@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
       "Bash(mix precommit)",
@@ -17,21 +18,50 @@
     "deny": [
       "Read(.env)",
       "Read(.env.*)",
-      "Bash(git push --force:*)",
-      "Bash(git push -f:*)",
-      "Bash(git reset --hard:*)",
-      "Bash(rm -rf:*)",
-      "Bash(curl:* | sh)"
+      "Read(**/*.pem)",
+      "Read(**/id_rsa*)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)"
     ]
   },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "network": {
+      "allowedDomains": ["repo.hex.pm", "builds.hex.pm", "hex.pm", "github.com"]
+    }
+  },
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-context.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/bash-gate.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.ex|*.exs) cd \"$CLAUDE_PROJECT_DIR\" && mix format \"$f\" >/dev/null 2>&1 ;; esac; exit 0"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post-edit-format.sh",
+            "timeout": 30
           }
         ]
       }
@@ -41,7 +71,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && log=$(mktemp) && if ! mix precommit >\"$log\" 2>&1; then echo 'mix precommit FAILED — the task is not done:' >&2; tail -40 \"$log\" >&2; exit 2; fi",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop-verify.sh",
             "timeout": 300
           }
         ]

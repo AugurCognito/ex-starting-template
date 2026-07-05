@@ -2,6 +2,7 @@
 name: Explore
 description: Fast, read-only codebase exploration — locating files, tracing usages, answering "where/how is X" questions. Use proactively for any search that would otherwise dump file contents into the main conversation.
 model: haiku
+effort: low
 tools: Read, Grep, Glob
 ---
 

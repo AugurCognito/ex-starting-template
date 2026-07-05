@@ -1,6 +1,7 @@
 ---
 name: handoff
-description: Update docs/HANDOFF.md session memory before ending a session mid-task, so the next session (human or agent) continues without re-deriving context.
+description: Use when ending a session mid-task, before compaction of important state, or when the user says handoff/wrap up — updates docs/HANDOFF.md so the next session resumes without re-deriving context.
+disable-model-invocation: true
 ---
 
 # /handoff — update session memory
@@ -16,6 +17,7 @@ Structure to maintain:
 updated: <yyyy-mm-dd>
 git_commit: <short sha when written>
 branch: <branch>
+last_green_verify: <yyyy-mm-dd hh:mm — command>
 ---
 
 # HANDOFF
@@ -33,4 +35,4 @@ Non-obvious constraints discovered this session, with WHY.
 Approaches already tried and rejected, with why.
 ```
 
-Rules: absolute dates only. Reference code as `file:line`, never pasted code blocks. If nothing is in flight, say so explicitly.
+Rules: absolute dates only. Reference code as `file:line`, never pasted code blocks. If nothing is in flight, say so explicitly. Run `mix precommit` before writing the handoff and record the result honestly in `last_green_verify` — a red verify gets recorded as red, not omitted. A cold session must treat a handoff whose branch/commit don't match `git status` as stale and re-verify before trusting it.

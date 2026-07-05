@@ -1,6 +1,7 @@
 ---
 name: report
-description: Persist investigation findings to docs/reports/. Use when a root cause, benchmark, survey, or decision input was discovered that a future session would otherwise re-derive.
+description: Use when an investigation produced a root cause, benchmark, survey, or decision input that a future session would otherwise re-derive — persists findings to docs/reports/.
+disable-model-invocation: true
 ---
 
 # /report — persist findings
@@ -30,4 +31,4 @@ What was checked, what was found (file:line references, command outputs, URLs).
 What should change because of this, if anything.
 ```
 
-Rules: capture the WHY. Cite evidence precisely enough that a skeptic can re-verify — `file:line` references and URLs, never pasted code blocks. Absolute dates only. If the finding decided something, also append the decision to `docs/decisions.md`.
+Rules: capture the WHY. Cite evidence precisely enough that a skeptic can re-verify — `file:line` references and URLs, never pasted code blocks. Evidence includes the actual command output (trimmed to the relevant lines), not the assertion that it passed. Absolute dates only. If the finding decided something, also append the decision to `docs/decisions.md`.

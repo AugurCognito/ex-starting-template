@@ -23,3 +23,12 @@ The skill-creator eval pattern (`evals.json`, blind A/B) was considered for `/pl
 ## 2026-07-04 — Completed plans archive to `docs/plans/archive/`
 
 Plans are kept, not deleted, after execution (`status: done`, moved by the `/handoff` sweep) — cheap, and preserves the WHY for future sessions. Claude Code's own plan storage stays machine-local (`~/.claude/plans/`), so repo-visible plans must be written by convention.
+
+## 2026-07-06 — Harness SOTA upgrade
+
+- Bash deny-lists demoted to defense-in-depth: current docs call argument-constrained Bash patterns fragile (wrappers, compound commands bypass them); command gating now lives in a PreToolUse hook (`.claude/hooks/bash-gate.sh`) plus the OS sandbox with a hex.pm/github.com network allowlist.
+- Stop hook hardened (`.claude/hooks/stop-verify.sh`): honors `stop_hook_active` (infinite-loop guard), short-circuits on an unchanged worktree fingerprint (`.git/claude-last-green`), and emits failures-only capped output — full logs destroy the model's context.
+- SessionStart injection added (`.claude/hooks/session-context.sh`): re-grounds branch/dirty-state/definition-of-done after startup, clear, and compaction — adherence decays within-session, not with file shape, per the 2026 factorial study.
+- Skills rewritten to trigger-first ("Use when…") descriptions; handoff/report/audit marked `disable-model-invocation` (human-timed rituals).
+- `/audit` weekly drift-and-slop sweep added (plan drift, handoff currency, decision contradictions, doc/code drift, slop trend).
+- Mutation testing (audit category 6) deferred for this repo: no maintained Elixir mutation tool exists — muzak last released 2022-12, exavier 2020-11, mutation 2017-01 (hex.pm, checked 2026-07-06). Revisit if a maintained tool appears.

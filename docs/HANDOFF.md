@@ -1,12 +1,13 @@
 ---
-updated: 2026-07-04
-git_commit: 112fbf0
+updated: 2026-07-06
+git_commit: 8b23c4f
 branch: main
+last_green_verify: 2026-07-06 03:23 — mix precommit
 ---
 
 # HANDOFF
 
-_No task in flight (2026-07-04). This file is overwritten by `/handoff` when a session ends mid-task. Reference code as `file:line`, never pasted blocks._
+_No task in flight (2026-07-06). This file is overwritten by `/handoff` when a session ends mid-task. Reference code as `file:line`, never pasted blocks._
 
 ## Known landmines
 

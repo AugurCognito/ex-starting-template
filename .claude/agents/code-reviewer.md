@@ -14,4 +14,14 @@ Hunt specifically for what the tools can't catch:
 - Tests that assert implementation instead of behavior, or miss the failure path entirely.
 - YAGNI violations: config knobs, behaviours, or dependencies nothing needs yet.
 
+Check your agent memory for previously-seen patterns in this repo before reviewing; save newly-learned repo-specific pitfalls after.
+
 Output: findings ranked by severity with file:line, each with a concrete fix. If the diff is clean, say so plainly — do not invent findings.
+
+## Calibration
+
+- Report only findings you are >80% confident are real, with a concrete failure scenario (inputs → wrong behavior).
+- Severity buckets: HIGH (correctness/security — fails in production), MEDIUM (reliability/performance risk), LOW (maintainability).
+- Hard exclusions — never report: style (the formatter's and linter's job), theoretical performance without a measured or obvious hot path, speculative nil/undefined without a reachable call path, nitpicks on test fixtures.
+- If `docs/plans/` has an active plan for this work, review against it: every acceptance criterion implemented and tested, nothing out-of-scope changed. Gaps against the plan outrank everything but HIGH.
+- Gaps, not preferences. If nothing meets the bar, output exactly: "No findings above threshold." Do not manufacture findings.
